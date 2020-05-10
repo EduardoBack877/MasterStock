@@ -5,36 +5,28 @@
  */
 package masterstock;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Back Rei Delas
- */
-public class MasterStock {
 
-   public static Connection conexao = null;
+public class ConexaoDB {
 
-    /**
-     * @param args the command line arguments
-     */
- /*   public static void main(String[] args) {
-        if (abrirConexao()) {
-            JanelaPrincipal minhaJanela = new JanelaPrincipal();
-            minhaJanela.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar no banco!");
-        }
-    }*/
+    private static ConexaoDB instancia = null;
+    private Connection conexao = null;
 
-    private static boolean abrirConexao() {
+    public ConexaoDB() {
         try {
-            String dbdriver = "org.postgresql.Driver";
-            String dburl = "jdbc:postgresql://localhost:5432/MasterStock";
-            String dbuser = "postgres";
-            String dbsenha = "postgres";
+            // Carrega informações do arquivo de propriedades
+            Properties prop = new Properties();
+            prop.load(new FileInputStream("db.properties"));
+            String dbdriver = prop.getProperty("db.driver");
+            String dburl = prop.getProperty("db.url");
+            String dbuser = prop.getProperty("db.user");
+            String dbsenha = prop.getProperty("db.senha");
+
 
             // Carrega Driver do Banco de Dados
             Class.forName(dbdriver);
@@ -47,12 +39,57 @@ public class MasterStock {
                 conexao = DriverManager.getConnection(dburl);
             }
 
-            return true;
-
         } catch (Exception e) {
-            System.err.println("Erro ao tentar conectar: " + e);
-            return false;
+            System.err.println(e);
         }
-
     }
+
+    // Retorna instância
+    public static ConexaoDB getInstance() {
+        if (instancia == null) {
+            instancia = new ConexaoDB();
+        }
+        return instancia;
+    }
+
+    // Retorna conexão
+    public Connection getConnection() {
+        if (conexao == null) {
+            throw new RuntimeException("conexao==null");
+        }
+        return conexao;
+    }
+
+    // Efetua fechamento da conexão
+    public void shutDown() {
+        try {
+            conexao.close();
+            instancia = null;
+            conexao = null;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+}
+
+
+    
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
