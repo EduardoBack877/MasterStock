@@ -1,20 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import apoio.IDAOT;
 import entidade.Funcionario;
+import entidade.Pessoa;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- *
- * @author Back Rei Delas
- */
-public class FuncionarioDAO implements IDAOT<Funcionario> { 
 
+public class FuncionarioDAO implements IDAOT<Funcionario> { 
+    
+      ResultSet resultadoQ = null;
+
+      
+     // public boolean salvar(Funcionario o) {
+          //try {
+            //Statement st = ConexaoBD.getInstance().getConnection().createStatement();
+            
+            
+          
+          
+      //}
+    
+    
     @Override
     public boolean salvar(Funcionario o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -44,5 +53,17 @@ public class FuncionarioDAO implements IDAOT<Funcionario> {
     public Funcionario consultarId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
